@@ -1,18 +1,24 @@
 {
-  "name": "express-template",
+  "name": "file-uploader",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "@quixo3/prisma-session-store": "^3.1.13",
     "ejs": "^3.1.10",
-    "express": "^4.21.1",
-    "pg": "^8.13.1"
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.0.1"
   }
 }
