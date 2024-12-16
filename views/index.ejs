@@ -7,5 +7,12 @@
   </head>
   <body>
     <h1>File Uploader</h1>
+    <% if (locals.user) { %>
+      <h2><%= user.username %></h2>
+      <a href="/signout">Sign Out</a>
+    <% } else { %>
+      <a href="/signup">Sign Up</a>
+      <a href="/signin">Sign In</a>
+    <% } %>
   </body>
 </html>
