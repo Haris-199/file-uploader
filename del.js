@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require("./db/client");
 
 // await prisma.user.create({
 //   data: {
@@ -13,7 +12,7 @@ const prisma = new PrismaClient();
   const users = await prisma.user.findUnique({
     where: {
       username: "aris",
-    }
+    },
   })
   console.log(!users);
 })();
