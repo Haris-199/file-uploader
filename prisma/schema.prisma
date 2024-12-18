@@ -17,6 +17,7 @@ model User {
   id       Int    @id @default(autoincrement())
   username String @unique
   password String
+  files    File[]
 }
 
 model Session {
@@ -24,4 +25,14 @@ model Session {
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+model File {
+  id         String   @id
+  name       String
+  mimetype   String
+  size       Int
+  uploadedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
 }

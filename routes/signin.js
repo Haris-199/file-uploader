@@ -49,7 +49,7 @@ router.get("/", (req, res) => {
 router.post(
   "/",
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/drive",
     failureRedirect: "/signin",
   })
 );
