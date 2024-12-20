@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive</title>
+  </head>
+  <body>
+    <h1>Welcome <%= user.username %></h1>
+
+    <a href="/signout">Sign Out</a>
+
+    <% if (locals.folderId !== undefined) { %>
+
+      <h2>Upload a file</h2>
+      <form action="/files" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
+        <input type="file" name="uploaded_file" id="uploaded_file">
+        <button type="submit">Upload</button>
+      </form>
+      
+      <h2>New folder</h2>
+      <form action="/folders/<%= folderId %>" method="POST">
+        <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
+        <input type="text" name="folder_name" id="folder_name" placeholder="Folder">
+        <button type="submit">Create</button>
+      </form>
+
+    <% } else { %>
+
+      <h2>Upload a file</h2>
+      <form action="/files" method="POST" enctype="multipart/form-data">
+        <input type="file" name="uploaded_file" id="uploaded_file">
+        <button type="submit">Upload</button>
+      </form>
+      
+      <h2>New folder</h2>
+      <form action="/folders/" method="POST">
+        <input type="text" name="folder_name" id="folder_name" placeholder="Folder">
+        <button type="submit">Create</button>
+      </form>
+
+    <% } %>
+
+
+
+    <% if (locals.parentFolderId) { %>
+      <a href="/folders/<%= parentFolderId %>">Go back</a>
+    <% } else if (locals.folderId !== undefined) { %>
+      <a href="/folders">Go back</a>
+    <% } %>
+
+    <% if (folders.length > 0) { %>
+      <h2>Folders</h2>
+      <ul>
+        <% folders.forEach(folder => { %>
+        <li>
+          <a href="/folders/<%= folder.id %>"><%= folder.name %> <%= folder.createdAt.toLocaleString() %></a>
+        </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <% if (files.length > 0) { %>
+      <h2>Files</h2>
+
+      <ul>
+        <% files.forEach(file => { %>
+        <li><%= file.name %> <%= file.uploadedAt.toLocaleString() %> <%= file.size %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </body>
+</html>

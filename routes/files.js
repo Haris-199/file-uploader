@@ -15,17 +15,8 @@ const upload = multer({
   }),
 });
 
-router.get("/", (req, res) => {
-  if (!req.user) {
-    res.redirect("/");
-  }
-  console.log(req.user);
-
-  res.render("drive", { user: req.user });
-});
-
 router.post("/", upload.single("uploaded_file"), async (req, res) => {
-  await prisma.file.create({
+  let newFile = await prisma.file.create({
     data: {
       id: req.file.filename,
       name: req.file.originalname,
@@ -35,7 +26,20 @@ router.post("/", upload.single("uploaded_file"), async (req, res) => {
     },
   });
 
-  res.render("drive", { user: req.user });
+  if (req.body.parentFolderId !== undefined) {
+    newFile = await prisma.file.update({
+      where: { id: newFile.id },
+      data: {
+        parentFolder: { connect: { id: Number(req.body.parentFolderId) } },
+      },
+    });
+  }
+
+  if (req.body.parentFolderId) {
+    res.redirect(`/folders/${req.body.parentFolderId}`);
+  } else {
+    res.redirect("/folders");
+  }
 });
 
 module.exports = router;

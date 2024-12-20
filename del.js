@@ -6,6 +6,6 @@ const prisma = require("./db/client");
   //   where: { username: "Haris" },
   //   include: { files: true },
   // });
-  // await prisma.file.deleteMany();
+  await prisma.file.deleteMany();
   console.log(files);
 })();
