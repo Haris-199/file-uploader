@@ -7,5 +7,14 @@ const prisma = require("./db/client");
   //   include: { files: true },
   // });
   await prisma.file.deleteMany();
-  console.log(files);
+  // console.log(files);
+
+  const folderId = 18;
+  const context = {};
+  const folder = await prisma.folder.findUnique({ where: { id: folderId } });
+  context.folderId = folderId;
+  context.parentFolderId = folder.parentFolderId;
+  console.log(folder);
+  console.log(context);
+  
 })();

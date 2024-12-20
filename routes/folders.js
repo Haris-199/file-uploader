@@ -22,6 +22,10 @@ router.get("/:folderId?", async (req, res) => {
     const folder = await prisma.folder.findUnique({ where: { id: folderId } });
     context.folderId = folderId;
     context.parentFolderId = folder.parentFolderId;
+
+    if (folder.userId !== user.id) {
+      return res.status(403).render("403");
+    }
   }
 
   res.render("folder", context);
