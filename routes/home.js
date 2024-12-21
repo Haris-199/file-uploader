@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 router.get("/", (req, res) => {
-  res.render("index", { user: req.user });
+  res.render(".", {view: "home"});
 });
 
 module.exports = router;

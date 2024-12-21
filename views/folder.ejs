@@ -42,8 +42,6 @@
 
     <% } %>
 
-
-
     <% if (locals.parentFolderId) { %>
       <a href="/folders/<%= parentFolderId %>">Go back</a>
     <% } else if (locals.folderId !== undefined) { %>
@@ -63,7 +61,6 @@
 
     <% if (files.length > 0) { %>
       <h2>Files</h2>
-
       <ul>
         <% files.forEach(file => { %>
         <li><%= file.name %> <%= file.uploadedAt.toLocaleString() %> <%= file.size %></li>

@@ -1,0 +1,40 @@
+<div class="container-sm row-gap-5">
+
+  <div class="row">
+    <h1>Welcome to NeoDrive</h1>
+    <h3>Your Personal Cloud Storage Solution</h3>
+    <hr>
+  </div>
+  
+  <div class="row">
+    <p>
+      NeoDrive empowers you to store, manage, and access your files and folders securely from anywhere. With the intuitive interface and seamless organization tools, you can:
+    </p>
+  </div>
+  
+  <div class="row">
+    <p>📁 Create Folders: Organize your files effortlessly with custom folders.</p>
+    <p>📤 Upload Files: Easily upload and store your important documents, photos, and more.</p>
+    <p>🌍 Access Anytime, Anywhere: Log in from any device and never miss a file again.</p>
+  </div>
+  
+  <div class="row">
+    <p>
+      Whether you're managing work documents, personal photos, or collaborative projects, NeoDrive makes file storage simple and efficient.
+    </p>
+  </div>
+  
+  <div class="row">
+  <p>
+    Get started today and experience the freedom of secure cloud storage!
+  </p>
+  <% if (locals.user) { %>
+    <a href="/signout">Go to your Drive</a>
+  <% } else { %>
+    <p>
+      <a href="/signup">Sign Up Now</a> or <a href="/signin">Sign In</a> to your account.
+    </p>
+  <% } %>
+  </div>
+
+</div>

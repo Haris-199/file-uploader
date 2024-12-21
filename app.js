@@ -25,14 +25,14 @@ app.use(
 );
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+app.use('/css', express.static(__dirname + "/node_modules/bootstrap/dist/css"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use((req, res, next) => {
-  if (req.user){
-    res.locals.currentUser = req.user;
-    console.log(res.locals.currentUser, req.user);
+  if (req.user) {
+    res.locals.user = req.user;
   }
   next();
 });
