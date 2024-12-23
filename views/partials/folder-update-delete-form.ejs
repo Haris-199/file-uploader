@@ -1,0 +1,46 @@
+<div class="dropdown col-auto">
+  <button class="btn btn-outline-secondary m-0 py-0 px-1 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">⋮</button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#rename-folder<%= folder.id %>-modal">✏️ Rename</a></li>
+    <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#delete-folder<%= folder.id %>-modal">🗑️ Delete</a></li>
+  </ul>
+</div>
+
+<div class="modal fade" id="rename-folder<%= folder.id %>-modal" tabindex="-1" aria-labelledby="rename-folder<%= folder.id %>-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rename-folder<%= folder.id %>-modal-label">✏️ Rename Folder </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/folders/<%= folder.id %>" method="PUT">
+          <label for="folder<%= folder.id %>_new_name" class="form-label">New Folder Name</label>
+          <input name="folder<%= folder.id %>_new_name" id="folder<%= folder.id %>_new_name" placeholder="New Folder Name" required class="form-control" value="<%= folder.name %>">
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary mt-3">Rename</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delete-folder<%= folder.id %>-modal" tabindex="-1" aria-labelledby="delete-folder<%= folder.id %>-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delete-folder<%= folder.id %>-modal-label">🗑️ Delete Folder </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/folders/<%= folder.id %>" method="DELETE">
+          <h2 class="text-center">Are you sure you want to delete "<%= folder.name %>"?</h2>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-danger mt-3">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
