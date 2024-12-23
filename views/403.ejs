@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>403 Forbidden</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
-  </head>
-  <body
-    class="bg-light text-dark d-flex justify-content-center align-items-center vh-100"
-  >
-    <div class="text-center">
-      <h1 class="display-1 fw-bold">403</h1>
-      <h2 class="mb-4">Forbidden</h2>
-      <p class="lead">You don’t have permission to access this resource.</p>
-      <% if (locals.user) { %>
-      <a href="/folders" class="btn btn-primary mt-3">Return to your drive</a>
-      <% } %>
-      <a href="/" class="btn btn-primary mt-3">Return to Homepage</a>
-    </div>
-  </body>
-</html>
+
+<div
+  class="bg-light text-dark d-flex justify-content-center align-items-center vh-100"
+>
+  <div class=" text-center">
+    <h1 class="display-1 fw-bold">403</h1>
+    <h2 class="mb-4">Forbidden</h2>
+    <p class="lead">You don’t have permission to access this resource.</p>
+    <% if (locals.user) { %>
+    <a href="/folders" class="btn btn-primary mt-3">Return to your drive</a>
+    <% } %>
+    <a href="/" class="btn btn-primary mt-3">Return to Homepage</a>
+  </div>
+</div>

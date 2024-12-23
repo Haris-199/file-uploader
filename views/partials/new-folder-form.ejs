@@ -1,0 +1,26 @@
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#new-folder-modal">
+  📁 New Folder
+</button>
+
+<div class="modal fade" id="new-folder-modal" tabindex="-1" aria-labelledby="new-folder-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="new-folder-modal-label">📁 Create a New Folder</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if (locals.folderId !== undefined) { %>
+          <form action="/folders/<%= folderId %>" method="POST" class="mb-4">
+          <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
+        <% } else { %>
+          <form action="/folders/" method="POST" class="mb-4">
+        <% } %>
+          <label for="folder_name" class="form-label">Folder Name</label>
+          <input name="folder_name" id="folder_name" placeholder="New Folder" required class="form-control">
+          <button class="btn btn-success mt-3">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

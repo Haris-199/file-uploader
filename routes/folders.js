@@ -1,5 +1,6 @@
 const prisma = require("../db/client");
 const { Router } = require("express");
+const { filesize } = require("filesize");
 
 const router = Router();
 
@@ -16,19 +17,21 @@ router.get("/:folderId?", async (req, res) => {
     where: { userId: user.id, parentFolderId: folderId },
   });
   
-  const context = { user, files, folders };
+  const context = { view: "folder", title: "My Drive", user, files, filesize, folders};
 
   if (folderId !== null) {
     const folder = await prisma.folder.findUnique({ where: { id: folderId } });
+    context.folderName = folder.name;
     context.folderId = folderId;
     context.parentFolderId = folder.parentFolderId;
 
     if (folder.userId !== user.id) {
-      return res.status(403).render("403");
+      const errContext = { view: "403", title: "403 Error" };
+      return res.status(403).render(".", errContext);
     }
   }
 
-  res.render("folder", context);
+  res.render(".", context);
 });
 
 router.post("/:folderId?", async (req, res) => {

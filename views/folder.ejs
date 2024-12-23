@@ -1,71 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive</title>
-  </head>
-  <body>
-    <h1>Welcome <%= user.username %></h1>
+<div class="container-lg">
+  <h1>Welcome <%= user.username %></h1>
 
-    <a href="/signout">Sign Out</a>
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-light d-flex justify-content-between align-items-center">
+      <% if (locals.folderName) { %>
+        <h3 class="m-1"><%= folderName %></h3>
+      <% } else {%>
+        <h3 class="m-1">My Drive</h3>
+      <% } %>
 
-    <% if (locals.folderId !== undefined) { %>
+      <% if (locals.parentFolderId) { %>
+        <a class="btn btn-outline-light btn-sm" href="/folders/<%= parentFolderId %>">Go back</a>
+      <% } else if (locals.folderId !== undefined) { %>
+        <a class="btn btn-outline-light btn-sm" href="/folders">Go back</a>
+      <% } %>
+    </div>
 
-      <h2>Upload a file</h2>
-      <form action="/files" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
-        <input type="file" name="uploaded_file" id="uploaded_file">
-        <button type="submit">Upload</button>
-      </form>
-      
-      <h2>New folder</h2>
-      <form action="/folders/<%= folderId %>" method="POST">
-        <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
-        <input type="text" name="folder_name" id="folder_name" placeholder="Folder">
-        <button type="submit">Create</button>
-      </form>
+    <div class="p-2 bg-light">
+      <%- include("partials/upload-file-form", locals) %>
+      <%- include("partials/new-folder-form", locals) %>
+    </div>
+    
+    <ul class="list-group list-group-flush">
+      <%- include("partials/folders-list", locals) %>
+      <%- include("partials/files-list", locals) %>
 
-    <% } else { %>
-
-      <h2>Upload a file</h2>
-      <form action="/files" method="POST" enctype="multipart/form-data">
-        <input type="file" name="uploaded_file" id="uploaded_file">
-        <button type="submit">Upload</button>
-      </form>
-      
-      <h2>New folder</h2>
-      <form action="/folders/" method="POST">
-        <input type="text" name="folder_name" id="folder_name" placeholder="Folder">
-        <button type="submit">Create</button>
-      </form>
-
-    <% } %>
-
-    <% if (locals.parentFolderId) { %>
-      <a href="/folders/<%= parentFolderId %>">Go back</a>
-    <% } else if (locals.folderId !== undefined) { %>
-      <a href="/folders">Go back</a>
-    <% } %>
-
-    <% if (folders.length > 0) { %>
-      <h2>Folders</h2>
-      <ul>
-        <% folders.forEach(folder => { %>
-        <li>
-          <a href="/folders/<%= folder.id %>"><%= folder.name %> <%= folder.createdAt.toLocaleString() %></a>
+      <% if (folders.length === 0 && files.length === 0) { %>
+        <li class="list-group-item text-center text-muted">
+          No folders or files available.
         </li>
-        <% }) %>
-      </ul>
-    <% } %>
+      <% } %>
+    </ul>
+  </div>
 
-    <% if (files.length > 0) { %>
-      <h2>Files</h2>
-      <ul>
-        <% files.forEach(file => { %>
-        <li><%= file.name %> <%= file.uploadedAt.toLocaleString() %> <%= file.size %></li>
-        <% }) %>
-      </ul>
-    <% } %>
-  </body>
-</html>
+</div>

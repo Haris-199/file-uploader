@@ -1,0 +1,24 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upload-file-modal">
+  📤 Upload File
+</button>
+
+<div class="modal fade" id="upload-file-modal" tabindex="-1" aria-labelledby="upload-file-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="upload-file-modal-label">📤 Upload a File </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/files" method="POST" enctype="multipart/form-data" class="mb-4">
+          <% if (locals.folderId !== undefined) { %>
+            <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
+          <% } %>
+          <label for="uploaded_file" required class="form-label">Choose a file to upload</label>
+          <input type="file" name="uploaded_file" id="uploaded_file" class="form-control">
+          <button class="btn btn-primary mt-3">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
