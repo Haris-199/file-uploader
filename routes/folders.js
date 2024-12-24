@@ -57,4 +57,24 @@ router.post("/:folderId?", async (req, res) => {
   res.redirect(redirectRoute);
 });
 
+router.put("/:folderId", async (req, res) => {
+  if (Number(req.params.folderId) !== req.body.folderId) {
+    res.sendStatus(400);
+  }
+  console.log(
+    await prisma.folder.update({
+      where: { id: req.body.folderId },
+      data: { name: req.body.newName },
+    })
+  );
+  res.sendStatus(200);
+});
+
+router.delete("/:folderId", async (req, res) => {
+  console.log(
+    await prisma.folder.delete({ where: { id: Number(req.params.folderId) } })
+  );
+  res.sendStatus(200);
+});
+
 module.exports = router;
