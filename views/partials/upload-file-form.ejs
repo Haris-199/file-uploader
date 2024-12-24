@@ -14,10 +14,11 @@
           <% if (locals.folderId !== undefined) { %>
             <input type="hidden" name="parentFolderId" value="<%= locals.folderId %>">
           <% } %>
-          <label for="uploaded_file" required class="form-label">Choose a file to upload</label>
-          <input type="file" name="uploaded_file" id="uploaded_file" class="form-control">
-          <div class="d-flex justify-content-center">
-            <button class="btn btn-primary mt-3">Upload</button>
+          <label for="uploaded_file" class="form-label">Choose a file to upload</label>
+          <input type="file" name="uploaded_file" id="uploaded_file" required class="form-control">
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary">Upload</button>
           </div>
         </form>
       </div>
