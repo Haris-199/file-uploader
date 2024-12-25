@@ -1,7 +1,11 @@
 <div class="dropdown col-auto">
   <button class="btn btn-outline-secondary m-0 py-0 px-1 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">⋮</button>
   <ul class="dropdown-menu">
-    <li><a class="btn dropdown-item">📥 Download</a></li>
+    <li>
+      <form class="btn dropdown-item py-1 px-3" action="/files/<%= file.id %>/download" method="GET">
+        <button class="btn p-0 border-0">📥 Download</button>    
+      </form>
+    </li>
     <li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#rename-file<%= file.id %>-modal">✏️ Rename</a></li>
     <li><a class="btn dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#delete-file<%= file.id %>-modal">🗑️ Delete</a></li>
   </ul>

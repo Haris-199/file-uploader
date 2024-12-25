@@ -1,6 +1,8 @@
+const path = require("path");
+const { cwd } = require("node:process");
 const { v4: uuidv4 } = require("uuid");
 const { filesize } = require("filesize");
-const { removeFile } = require("../utils/")
+const { removeFile } = require("../utils/");
 const prisma = require("../db/client");
 const multer = require("multer");
 const { Router } = require("express");
@@ -41,6 +43,26 @@ router.post("/", upload.single("uploaded_file"), async (req, res) => {
     return res.redirect(`/folders/${req.body.parentFolderId}`);
   }
   res.redirect("/folders");
+});
+
+router.get("/:fileId/download", async (req, res) => {
+  const file = await prisma.file.findUnique({
+    where: { id: req.params.fileId },
+  });
+
+  if (!file) {
+    const errContext = {
+      view: "error",
+      code: "404",
+      title: "404 Error",
+      detail: "Not Found",
+      message: "File not found.",
+    };
+    return res.status(404).render(".", errContext);
+  }
+
+  const filePath = path.relative(cwd(), "./public/uploads/" + file.id);
+  res.download(filePath, file.name);
 });
 
 router.get("/:fileId", async (req, res) => {
