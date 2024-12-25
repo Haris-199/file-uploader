@@ -1,0 +1,16 @@
+
+<div
+  class="text-dark d-flex justify-content-center align-items-center vh-100"
+>
+  <div class=" text-center">
+    <h1 class="display-1 fw-bold"><%= code %></h1>
+    <% if (locals.detail) { %>
+      <h2 class="mb-4"><%= detail %></h2>
+    <% } %>
+    <p class="lead"><%= message %></p>
+    <% if (locals.user) { %>
+    <a href="/folders" class="btn btn-primary mt-3">Return to your drive</a>
+    <% } %>
+    <a href="/" class="btn btn-primary mt-3">Return to Homepage</a>
+  </div>
+</div>

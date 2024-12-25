@@ -1,0 +1,42 @@
+<div class="container-sm">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-light">
+      <h3 class="m-1">📄 File Details</h3>
+    </div>
+    <div class="card-body p-0">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+          <strong class="me-2">Name:</strong>
+          <span><%= file.name %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong class="me-2">Owner:</strong>
+          <span><%= user.username %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong class="me-2">Size:</strong>
+          <span><%= filesize(file.size, {round: 2}) %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong class="me-2">Parent Folder:</strong>
+          <span>
+            <span>📁</span>
+            <% if (folder !== null) { %>
+              <a href="/folders/<%= folder.id %>"><%= folder.name %></a>
+            <% } else { %>
+              <a href="/folders">My Drive</a>
+            <% } %>
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong class="me-2">Last Updated:</strong>
+          <span><%= new Date(file.updatedAt).toLocaleString() %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center rounded">
+          <strong class="me-2">Uploaded:</strong>
+          <span><%= new Date(file.uploadedAt).toLocaleString() %></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

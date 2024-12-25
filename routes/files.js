@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const { filesize } = require("filesize");
 const prisma = require("../db/client");
 const multer = require("multer");
 const { Router } = require("express");
@@ -36,10 +37,28 @@ router.post("/", upload.single("uploaded_file"), async (req, res) => {
   }
 
   if (req.body.parentFolderId) {
-    res.redirect(`/folders/${req.body.parentFolderId}`);
-  } else {
-    res.redirect("/folders");
+    return res.redirect(`/folders/${req.body.parentFolderId}`);
   }
+  res.redirect("/folders");
+});
+
+router.get("/:fileId" , async (req, res) => {
+  const file = await prisma.file.findUnique({ where: { id: req.params.fileId }, include: { user: true, parentFolder: true } });
+
+  if (!file) {
+    const errContext = { view: "error", code:"404", title:"404 Error", message: "File not found" };
+    return res.status(404).render(".", errContext);
+  }
+
+  const context = {
+    view: "file",
+    file,
+    filesize,
+    username: file.user.username,
+    folder: file.parentFolder,
+  };
+
+  res.render(".", context);
 });
 
 module.exports = router;
