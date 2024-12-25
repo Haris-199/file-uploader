@@ -43,7 +43,10 @@ passport.deserializeUser(async (id, done) => {
 });
 
 router.get("/", (req, res) => {
-  res.render("signin-form");
+  res.render(".", {
+    view: "signin-form",
+    title: "Sign In",
+  });
 });
 
 router.post(
