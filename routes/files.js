@@ -46,7 +46,13 @@ router.get("/:fileId" , async (req, res) => {
   const file = await prisma.file.findUnique({ where: { id: req.params.fileId }, include: { user: true, parentFolder: true } });
 
   if (!file) {
-    const errContext = { view: "error", code:"404", title:"404 Error", message: "File not found" };
+    const errContext = {
+      view: "error",
+      code: "404",
+      title: "404 Error",
+      detail: "Not Found",
+      message: "File not found.",
+    };
     return res.status(404).render(".", errContext);
   }
 

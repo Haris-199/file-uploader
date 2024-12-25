@@ -26,7 +26,13 @@ router.get("/:folderId?", async (req, res) => {
     context.parentFolderId = folder.parentFolderId;
 
     if (folder.userId !== user.id) {
-      const errContext = { view: "403", title: "403 Error" };
+      const errContext = {
+        view: "error",
+        code: "403",
+        title: "403 Error",
+        detail: "Forbidden",
+        message: "You don’t have permission to access this resource.",
+      };
       return res.status(403).render(".", errContext);
     }
   }

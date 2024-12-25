@@ -8,7 +8,7 @@
   </li>
   <% folders.forEach(folder => { %>
     <li class="list-group-item d-flex align-items-center">
-      <%- include("./folder-update-delete-form", {folder: folder}) %>
+      <%- include("./folder-options", { folder }) %>
       <strong class="col-5 ms-3 flex-grow-1">
         <a href="/folders/<%= folder.id %>"><%= folder.name %></a>
       </strong>

@@ -9,6 +9,7 @@
   </li>
   <% files.forEach(file => { %>
     <li class="list-group-item d-flex align-items-center">
+      <%- include("./file-options", { file }) %>
       <strong class="col-5 ms-3 flex-grow-1"><a href="/files/<%= file.id %>"><%= file.name %></a></strong>
       <div class="col-1 text-muted text-center">
         <%= filesize(file.size, {round: 2}) %>
