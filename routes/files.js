@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const { filesize } = require("filesize");
+const { removeFile } = require("../utils/")
 const prisma = require("../db/client");
 const multer = require("multer");
 const { Router } = require("express");
@@ -42,8 +43,11 @@ router.post("/", upload.single("uploaded_file"), async (req, res) => {
   res.redirect("/folders");
 });
 
-router.get("/:fileId" , async (req, res) => {
-  const file = await prisma.file.findUnique({ where: { id: req.params.fileId }, include: { user: true, parentFolder: true } });
+router.get("/:fileId", async (req, res) => {
+  const file = await prisma.file.findUnique({
+    where: { id: req.params.fileId },
+    include: { user: true, parentFolder: true },
+  });
 
   if (!file) {
     const errContext = {
@@ -65,6 +69,26 @@ router.get("/:fileId" , async (req, res) => {
   };
 
   res.render(".", context);
+});
+
+router.put("/:fileId", async (req, res) => {
+  if (req.params.fileId !== req.body.fileId) {
+    res.sendStatus(400);
+  }
+
+  await prisma.file.update({
+    where: { id: req.body.fileId },
+    data: { name: req.body.newName },
+  });
+
+  res.sendStatus(200);
+});
+
+router.delete("/:fileId", async (req, res) => {
+  const { fileId } = req.params;
+  removeFile(fileId);
+  await prisma.file.delete({ where: { id: fileId } });
+  res.sendStatus(200);
 });
 
 module.exports = router;
