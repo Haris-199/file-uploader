@@ -60,8 +60,6 @@ router.post("/", (req, res) => {
         return res.redirect("/folders");
       });
     } else {
-      console.log(info);
-      console.log(req.body);
       const errContext = { view: "signin-form", title: "Sign In", username: req.body.username };
       switch (info.message) {
         case "Incorrect password.":
