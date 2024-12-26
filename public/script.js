@@ -1,3 +1,13 @@
+const forms = document.querySelectorAll("form");
+forms.forEach((form) => {
+  form.addEventListener("submit", (e) => {
+    if (!form.checkValidity()) {
+      e.preventDefault();
+    }
+    form.classList.add("was-validated");
+  });
+});
+
 const onFolderRename = async (id, name) => {
   try {
     const response = await fetch(`/folders/${id}`, {

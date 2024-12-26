@@ -81,6 +81,16 @@ router.get("/:fileId", async (req, res) => {
     };
     return res.status(404).render(".", errContext);
   }
+  if (file.user.id !== req.user.id) {
+    const errContext = {
+      view: "error",
+      code: "403",
+      title: "403 Error",
+      detail: "Forbidden",
+      message: "You don’t have permission to access this resource.",
+    };
+    return res.status(403).render(".", errContext);
+  }
 
   const context = {
     view: "file",

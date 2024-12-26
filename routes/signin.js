@@ -14,12 +14,12 @@ passport.use(
       });
 
       if (user === null) {
-        return done(null, false, { message: "Incorrect username or user does not exist" });
+        return done(null, false, { message: "Incorrect username or user does not exist." });
       }
 
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        return done(null, false, { message: "Incorrect password" });
+        return done(null, false, { message: "Incorrect password." });
       }
 
       return done(null, user);
@@ -49,12 +49,31 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post(
-  "/",
-  passport.authenticate("local", {
-    successRedirect: "/folders",
-    failureRedirect: "/signin",
-  })
-);
+router.post("/", (req, res) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (user) {
+      req.login(user, (error) => {
+        if (error) {
+          console.log(error);
+          return res.send(error);
+        }
+        return res.redirect("/folders");
+      });
+    } else {
+      console.log(info);
+      console.log(req.body);
+      const errContext = { view: "signin-form", title: "Sign In", username: req.body.username };
+      switch (info.message) {
+        case "Incorrect password.":
+          errContext.passwordError = info.message;
+          break;
+        case "Incorrect username or user does not exist.":
+          errContext.usernameError = info.message;
+          break;
+      }
+      return res.render(".", errContext);
+    }
+  })(req, res);
+});
 
 module.exports = router;
