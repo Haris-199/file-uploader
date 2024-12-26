@@ -29,7 +29,7 @@ model File {
   size           Int
   uploadedAt     DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         Int
   parentFolder   Folder?  @relation(fields: [parentFolderId], references: [id], onDelete: Cascade)
   parentFolderId Int?
@@ -42,7 +42,7 @@ model Folder {
   updatedAt      DateTime @updatedAt
   files          File[]
   userId         Int
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   parentFolderId Int?
   parentFolder   Folder?  @relation("FolderHierarchy", fields: [parentFolderId], references: [id], onDelete: Cascade)
   childFolders   Folder[] @relation("FolderHierarchy")
