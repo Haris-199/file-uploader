@@ -9,13 +9,20 @@ forms.forEach((form) => {
 });
 
 const onFolderRename = async (id, name) => {
+  const input = document.getElementById(`folder${id}_new_name`);
+  if (!input.checkValidity()) {
+    input.classList.add("is-invalid");
+    input.focus();
+    input.nextElementSibling.textContent = "Please enter a valid folder name.";
+    return;
+  }
   try {
     const response = await fetch(`/folders/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         folderId: Number(id),
-        newName: document.getElementById(`folder${id}_new_name`).value,
+        newName: input.value,
       }),
     });
     if (response.status == 200) {
@@ -34,7 +41,7 @@ const onFolderDelete = async (id, name) => {
     if (response.status == 200) {
       window.location.reload();
     } else if (!response.ok) {
-      alert("Error: Failed to delete folder");
+      alert("Error: Failed to delete folder.");
     }
   } catch (error) {
     alert(`An error occurred while deleting the folder "${name}".`);
@@ -42,19 +49,26 @@ const onFolderDelete = async (id, name) => {
 };
 
 const onFileRename = async (id, name) => {
+  const input = document.getElementById(`file${id}_new_name`);
+  if (!input.checkValidity()) {
+    input.classList.add("is-invalid");
+    input.focus();
+    input.nextElementSibling.textContent = "Please enter a valid file name.";
+    return;
+  }
   try {
     const response = await fetch(`/files/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         fileId: id,
-        newName: document.getElementById(`file${id}_new_name`).value,
+        newName: input.value,
       }),
     });
     if (response.status == 200) {
       window.location.reload();
     } else if (!response.ok) {
-      alert("Error: Failed to rename file");
+      alert("Error: Failed to rename file.");
     }
   } catch (error) {
     alert(`An error occurred while renaming the file "${name}".`);
