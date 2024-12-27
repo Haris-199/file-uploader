@@ -8,6 +8,16 @@ forms.forEach((form) => {
   });
 });
 
+const formUploadCancel = document.getElementById("upload_file_cancel");
+formUploadCancel.addEventListener("click", () => {
+  formUploadCancel.form.classList.remove("was-validated");
+});
+
+const createFolderCancel = document.getElementById("create_folder_cancel");
+createFolderCancel.addEventListener("click", () => {
+  createFolderCancel.form.classList.remove("was-validated");
+});
+
 const onFolderRename = async (id, name) => {
   const input = document.getElementById(`folder${id}_new_name`);
   if (!input.checkValidity()) {
