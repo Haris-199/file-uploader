@@ -6,7 +6,16 @@
     <% if (locals.detail) { %>
       <h2 class="mb-4"><%= detail %></h2>
     <% } %>
-    <p class="lead"><%= message %></p>
+    <% if (locals.message) { %>
+      <p class="lead"><%= message %></p>
+    <% } %>
+    <% if (locals.messages) { %>
+      <div class="d-flex flex-column justify-content-center">
+        <% messages.forEach(msg => { %>
+          <p>msg</p>
+        <% }) %>
+      </div>
+    <% } %>
     <% if (locals.user) { %>
     <a href="/folders" class="btn btn-primary mt-3">Return to your drive</a>
     <% } %>

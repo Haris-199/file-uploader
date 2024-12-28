@@ -54,7 +54,7 @@ router.post("/", (req, res) => {
     if (user) {
       req.login(user, (error) => {
         if (error) {
-          console.log(error);
+          console.error(error);
           return res.send(error);
         }
         return res.redirect("/folders");

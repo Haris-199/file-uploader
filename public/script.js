@@ -9,14 +9,18 @@ forms.forEach((form) => {
 });
 
 const formUploadCancel = document.getElementById("upload_file_cancel");
-formUploadCancel.addEventListener("click", () => {
-  formUploadCancel.form.classList.remove("was-validated");
-});
+if (formUploadCancel) {
+  formUploadCancel.addEventListener("click", () => {
+    formUploadCancel.form.classList.remove("was-validated");
+  });
+}
 
 const createFolderCancel = document.getElementById("create_folder_cancel");
-createFolderCancel.addEventListener("click", () => {
-  createFolderCancel.form.classList.remove("was-validated");
-});
+if (createFolderCancel) {
+  createFolderCancel.addEventListener("click", () => {
+    createFolderCancel.form.classList.remove("was-validated");
+  });
+}
 
 const onFolderRename = async (id, name) => {
   const input = document.getElementById(`folder${id}_new_name`);
@@ -39,6 +43,7 @@ const onFolderRename = async (id, name) => {
       window.location.reload();
     } else if (!response.ok) {
       alert("Error: Failed to rename folder");
+      input.focus();
     }
   } catch (error) {
     alert(`An error occurred while renaming the folder "${name}".`);
@@ -79,6 +84,7 @@ const onFileRename = async (id, name) => {
       window.location.reload();
     } else if (!response.ok) {
       alert("Error: Failed to rename file.");
+      input.focus();
     }
   } catch (error) {
     alert(`An error occurred while renaming the file "${name}".`);
