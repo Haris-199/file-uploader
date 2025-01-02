@@ -1,10 +1,12 @@
 const bcrypt = require("bcryptjs");
 const prisma = require("../db/client");
-
 const { Router } = require("express");
 const { postValidation } = require("../middleware/validation/signup");
 const { validationResult } = require("express-validator");
+const { redirectIfAuthenticated } = require("../middleware");
 const router = Router();
+
+router.use(redirectIfAuthenticated);
 
 router.get("/", (req, res) => {
   res.render(".", {
@@ -51,7 +53,7 @@ router.post("/", postValidation, async (req, res, next) => {
       });
     });
     
-    res.redirect("/");
+    res.redirect("/signin");
   } catch (err) {
     next(err);
   }

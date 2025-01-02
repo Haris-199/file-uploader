@@ -3,8 +3,8 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const express = require("express");
+const { redirectIfAuthenticated } = require("../middleware");
 const router = express.Router();
-
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -41,6 +41,8 @@ passport.deserializeUser(async (id, done) => {
     done(err);
   }
 });
+
+router.use(redirectIfAuthenticated);
 
 router.get("/", (req, res) => {
   res.render(".", {

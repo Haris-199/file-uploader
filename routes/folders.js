@@ -1,8 +1,11 @@
 const prisma = require("../db/client");
 const { Router } = require("express");
 const { filesize } = require("filesize");
+const { redirectIfNotAuthenticated } = require("../middleware");
 
 const router = Router();
+
+router.use(redirectIfNotAuthenticated);
 
 router.get("/:folderId?", async (req, res) => {
   const { user } = req;

@@ -8,6 +8,7 @@ const { Router } = require("express");
 const { createClient } = require("@supabase/supabase-js");
 const fs = require("fs/promises");
 const { postValidation, getValidation, putValidation, deleteValidation } = require("../middleware/validation/files");
+const { redirectIfNotAuthenticated } = require("../middleware");
 require("dotenv").config();
 
 const supabase = createClient(
@@ -26,6 +27,8 @@ const upload = multer({
     },
   }),
 });
+
+router.use(redirectIfNotAuthenticated);
 
 router.post("/", upload.single("uploaded_file"), postValidation, async (req, res) => {
   try {
