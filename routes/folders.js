@@ -2,15 +2,14 @@ const prisma = require("../db/client");
 const { Router } = require("express");
 const { filesize } = require("filesize");
 const { redirectIfNotAuthenticated } = require("../middleware");
+const { getValidation, postValidation, putValidation, deleteValidation } = require("../middleware/validation/folders");
 
 const router = Router();
 
 router.use(redirectIfNotAuthenticated);
 
-router.get("/:folderId?", async (req, res) => {
+router.get("/:folderId?", getValidation, async (req, res) => {
   const { user } = req;
-  if (!user) res.redirect("/");
-  
   const folderId = +req.params.folderId || null;
 
   const files = await prisma.file.findMany({
@@ -27,23 +26,12 @@ router.get("/:folderId?", async (req, res) => {
     context.folderName = folder.name;
     context.folderId = folderId;
     context.parentFolderId = folder.parentFolderId;
-
-    if (folder.userId !== user.id) {
-      const errContext = {
-        view: "error",
-        code: "403",
-        title: "403 Error",
-        detail: "Forbidden",
-        message: "You don’t have permission to access this resource.",
-      };
-      return res.status(403).render(".", errContext);
-    }
   }
 
   res.render(".", context);
 });
 
-router.post("/:folderId?", async (req, res) => {
+router.post("/:folderId?", postValidation, async (req, res) => {
   const { folder_name, parentFolderId } = req.body;
   
   const newFolder = await prisma.folder.create({
@@ -66,7 +54,7 @@ router.post("/:folderId?", async (req, res) => {
   res.redirect(redirectRoute);
 });
 
-router.put("/:folderId", async (req, res) => {
+router.put("/:folderId", putValidation, async (req, res) => {
   if (Number(req.params.folderId) !== req.body.folderId) {
     res.sendStatus(400);
   }
@@ -79,7 +67,7 @@ router.put("/:folderId", async (req, res) => {
   res.sendStatus(200);
 });
 
-router.delete("/:folderId", async (req, res) => {
+router.delete("/:folderId", deleteValidation, async (req, res) => {
   await prisma.folder.delete({ where: { id: Number(req.params.folderId) } });
   res.sendStatus(200);
 });

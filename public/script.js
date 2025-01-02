@@ -42,8 +42,10 @@ const onFolderRename = async (id, name) => {
     if (response.status == 200) {
       window.location.reload();
     } else if (!response.ok) {
-      alert("Error: Failed to rename folder");
+      const { errors } = await response.json();
+      input.classList.add("is-invalid");
       input.focus();
+      input.nextElementSibling.textContent = errors[0].msg;
     }
   } catch (error) {
     alert(`An error occurred while renaming the folder "${name}".`);
@@ -83,8 +85,10 @@ const onFileRename = async (id, name) => {
     if (response.status == 200) {
       window.location.reload();
     } else if (!response.ok) {
-      alert("Error: Failed to rename file.");
+      const { errors } = await response.json();
+      input.classList.add("is-invalid");
       input.focus();
+      input.nextElementSibling.textContent = errors[0].msg;
     }
   } catch (error) {
     alert(`An error occurred while renaming the file "${name}".`);

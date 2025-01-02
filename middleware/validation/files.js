@@ -69,18 +69,18 @@ const getValidation = [
 const putValidation = [
   body("fileId")
     .isUUID(4).withMessage("Invalid file ID.")
-    .custom(async (value) => {
+    .custom(async (value, { req }) => {
+      if (value !== req.body.fileId) {
+        throw new Error("Parameter ID does not match body ID.");
+      }
       const file = await prisma.file.findUnique({
         where: { id: value },
       });
       if (!file) {
         throw new Error("File not found.");
       }
-      return true;
-    })
-    .custom(async (value, { req }) => {
-      if (req.params.fileId !== req.body.fileId) {
-        throw new Error("Parameter ID does not match body ID.");
+      if (file.userId !== 12) {
+        throw new Error("You don’t have permission to access this resource.");
       }
       return true;
     }),
@@ -99,12 +99,15 @@ const putValidation = [
 const deleteValidation = [
   param("fileId")
     .isUUID(4).withMessage("Invalid file ID.")
-    .custom(async (value) => {
+    .custom(async (value, { req }) => {
       const file = await prisma.file.findUnique({
         where: { id: value },
       });
-      if (!file) {
+      if (!file) { 
         throw new Error("File not found.");
+      }
+      if (file.userId !== req.user?.id) {
+        throw new Error("You don’t have permission to access this resource.");
       }
       return true;
     }),
