@@ -1,8 +1,8 @@
 <div class="dropdown col-auto">
   <button class="btn btn-outline-secondary m-0 py-0 px-1 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">⋮</button>
   <ul class="dropdown-menu">
-    <li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#rename-folder<%= folder.id %>-modal">✏️ Rename</a></li>
-    <li><a class="btn dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#delete-folder<%= folder.id %>-modal">🗑️ Delete   </a></li>
+    <li><a class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#rename-folder<%= folder.id %>-modal"><i class="bi bi-pencil-square me-1"></i> Rename</a></li>
+    <li><a class="btn dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#delete-folder<%= folder.id %>-modal"><i class="bi bi-trash3 me-1"></i> Delete   </a></li>
   </ul>
 </div>
 
@@ -10,7 +10,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="rename-folder<%= folder.id %>-modal-label">✏️ Rename Folder </h5>
+        <h5 class="modal-title" id="rename-folder<%= folder.id %>-modal-label"><i class="bi bi-pencil-square"></i> Rename Folder </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -30,7 +30,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="delete-folder<%= folder.id %>-modal-label">🗑️ Delete Folder</h5>
+        <h5 class="modal-title" id="delete-folder<%= folder.id %>-modal-label"><i class="bi bi-trash3"></i> Delete Folder</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">

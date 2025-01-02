@@ -2,13 +2,13 @@
 
   <div class="text-center mb-5">
     <h1 class="display-1 fw-bold">Welcome to NeoDrive</h1>
-    <p class="display-6 text-muted">Your Personal Cloud Storage Solution</p>
+    <p class="display-6 text-muted"><i class="bi bi-cloud-check"></i> Your Personal Cloud Storage Solution</p>
     <hr class="w-50 mx-auto">
   </div>
   
   <div class="mb-5 text-center">
     <p class="lead">
-      NeoDrive empowers you to store, manage, and access your files and folders securely from anywhere. With an intuitive interface and seamless organization tools, you can:
+      <i class="bi bi-info-circle"></i> NeoDrive empowers you to store, manage, and access your files and folders securely from anywhere. With an intuitive interface and seamless organization tools, you can:
     </p>
   </div>
   
@@ -16,7 +16,7 @@
     <div class="col-sm-3">
       <div class="card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title fs-4">📁 Create Folders</h5>
+          <h5 class="card-title fs-4"><i class="bi bi-folder"></i> Create Folders</h5>
           <p class="card-text">Organize your files effortlessly with custom folders.</p>
         </div>
       </div>
@@ -24,7 +24,7 @@
     <div class="col-sm-3">
       <div class="card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title fs-4">📤 Upload Files</h5>
+          <h5 class="card-title fs-4"><i class="bi bi-cloud-upload"></i> Upload Files</h5>
           <p class="card-text">Easily upload and store your important documents, photos, and more.</p>
         </div>
       </div>
@@ -32,7 +32,7 @@
     <div class="col-sm-3">
       <div class="card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title fs-4">🌍 Access Anywhere</h5>
+          <h5 class="card-title fs-4"><i class="bi bi-globe-americas"></i> Access Anywhere</h5>
           <p class="card-text">Log in from any device and never miss a file again.</p>
         </div>
       </div>
@@ -40,20 +40,20 @@
   </div>
   
   <div class="text-center mt-5">
-    <p class="lead">
+    <p class="lead mb-5">
       Whether you're managing work documents, personal photos, or collaborative projects, NeoDrive makes file storage simple and efficient.
     </p>
     <p class="fs-5">
-      Get started today and experience the freedom of secure cloud storage!
+      <i class="bi bi-rocket"></i> Get started today and experience the freedom of secure cloud storage!
     </p>
   </div>
   
-  <div class="text-center mt-4">
+  <div class="text-center mt-3">
     <% if (locals.user) { %>
       <a href="/folders" class="btn btn-primary btn-lg">Go to your Drive</a>
     <% } else { %>
-      <a href="/signup" class="btn btn-primary btn-lg me-2">Sign Up Now</a>
-      <a href="/signin" class="btn btn-outline-secondary btn-lg">Sign In</a>
+      <a href="/signup" class="btn btn-primary btn-lg me-2"><i class="bi bi-person-plus"></i> Sign Up Now</a>
+      <a href="/signin" class="btn btn-outline-secondary btn-lg"><i class="bi bi-box-arrow-in-right"></i> Sign In</a>
     <% } %>
   </div>
 

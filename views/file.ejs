@@ -1,7 +1,7 @@
 <div class="container-sm">
   <div class="card shadow-sm mb-4">
     <div class="card-header bg-dark text-light">
-      <h3 class="m-1">📄 File Details</h3>
+      <h3 class="m-1"><i class="bi bi-file-earmark-text-fill"></i> File Details</h3>
     </div>
     <div class="card-body p-0">
       <ul class="list-group list-group-flush">
@@ -20,7 +20,7 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <strong class="me-2">Parent Folder:</strong>
           <span>
-            <span>📁</span>
+            <span><i class="bi bi-folder me-1"></i></span>
             <% if (folder !== null) { %>
               <a href="/folders/<%= folder.id %>"><%= folder.name %></a>
             <% } else { %>

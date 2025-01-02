@@ -28,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/css', express.static(__dirname + "/node_modules/bootstrap/dist/css"));
 app.use('/js', express.static(__dirname + "/node_modules/bootstrap/dist/js"));
+app.use('/icons', express.static(__dirname + "/node_modules/bootstrap-icons/font"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
