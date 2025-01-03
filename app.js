@@ -5,6 +5,7 @@ const passport = require("passport");
 const session = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
+require("./config/passport-setup");
 require("dotenv").config();
 
 const app = express();
