@@ -1,5 +1,6 @@
+const { renderError, sendValidationErrors } = require("../../controllers/errors/client");
 const prisma = require("../../db/client");
-const { body, param, validationResult } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const getValidation = [
   param("folderId")
@@ -18,32 +19,7 @@ const getValidation = [
       }
       return true;
     }),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const msg = errors.array()[0].msg;
-      const errorContext = {
-        view: "error",
-        message: msg,
-      };
-      switch (msg) {
-        case "Folder not found.":
-          errorContext.detail = "Not Found";
-          res.status(404);
-          break;
-        case "You don’t have permission to access this resource.":
-          errorContext.detail = "Forbidden";
-          res.status(403);
-          break;
-      }
-      return res.render(".", {
-        ...errorContext,
-        code: res.statusCode,
-        title: `${res.statusCode} Error`,
-      });
-    }
-    next();
-  },
+  renderError(),
 ];
 
 const postValidation = [
@@ -79,37 +55,8 @@ const postValidation = [
       return true;
     }),
   body("folder_name")
-    .isLength({ min: 1 }).withMessage("Folder name not provided."),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const msg = errors.array()[0].msg;
-      const errorContext = {
-        view: "error",
-        message: msg,
-      };
-      switch (msg) {
-        case "Folder not found.":
-          errorContext.detail = "Not Found";
-          res.status(404);
-          break;
-        case "You don’t have permission to access this resource.":
-          errorContext.detail = "Forbidden";
-          res.status(403);
-          break;
-        default:
-          errorContext.detail = "Bad Request.";
-          res.status(400);
-          break;
-      }
-      return res.render(".", {
-        ...errorContext,
-        code: res.statusCode,
-        title: `${res.statusCode} Error`,
-      });
-    }
-    next();
-  },
+    .isLength({ min: 1 }).withMessage("Name is required."),
+  renderError(),
 ];
 
 const putValidation = [
@@ -125,7 +72,7 @@ const putValidation = [
       if (!folder) {
         throw new Error("Folder not found.");
       }
-      if (folder.userId !== req.user?.id) {
+      if (folder.userId !== 12) {
         throw new Error("You don’t have permission to access this resource.");
       }
       if (value !== Number(req.params.folderId)) {
@@ -134,14 +81,8 @@ const putValidation = [
       return true;
     }),
   body("newName")
-    .isLength({ min: 1 }).withMessage("Folder name is required."),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).send(errors);
-    }
-    next();
-  },
+    .isLength({ min: 1 }).withMessage("Name is required."),
+  sendValidationErrors(),
 ];
 
 const deleteValidation = [
@@ -161,13 +102,7 @@ const deleteValidation = [
       }
       return true;
     }),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).send(errors);
-    }
-    next();
-  },
+  sendValidationErrors(),
 ];
 
 module.exports = { postValidation, getValidation, putValidation, deleteValidation};

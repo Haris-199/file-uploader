@@ -1,5 +1,6 @@
+const { renderError, sendValidationErrors } = require("../../controllers/errors/client");
 const prisma = require("../../db/client");
-const { body, param, validationResult } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const postValidation = [
   body("uploaded_file").custom((value, { req }) => {
@@ -8,19 +9,7 @@ const postValidation = [
     }
     return true;
   }),
-  (req, res, next) => {
-    const errors = validationResult(req).array();
-    if (errors.length > 0) {
-      return res.status(400).render(".", {
-        view: "error",
-        code: "400",
-        title: "400 Error",
-        detail: "Bad Request",
-        message: errors[0].msg,
-      });
-    }
-    next();
-  },
+  renderError(),
 ];
 
 const getValidation = [
@@ -38,36 +27,11 @@ const getValidation = [
       }
       return true;
     }),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const msg = errors.array()[0].msg;
-      const errorContext = {
-        view: "error",
-        message: msg,
-      };
-      switch (msg) {
-        case "File not found.":
-          errorContext.detail = "Not Found";
-          res.status(404);
-          break;
-        case "You don’t have permission to access this resource.":
-          errorContext.detail = "Forbidden";
-          res.status(403);
-          break;
-      }
-      return res.render(".", {
-        ...errorContext,
-        code: res.statusCode,
-        title: `${res.statusCode} Error`,
-      });
-    }
-    next();
-  },
+  renderError(),
 ];
 
 const putValidation = [
-  body("fileId")
+  param("fileId")
     .isUUID(4).withMessage("Invalid file ID.")
     .custom(async (value, { req }) => {
       if (value !== req.body.fileId) {
@@ -87,13 +51,7 @@ const putValidation = [
   body("newName")
     .trim()
     .isLength({ min: 1 }).withMessage("Name is required."),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).send(errors);
-    }
-    next();
-  },
+  sendValidationErrors(),
 ];
 
 const deleteValidation = [
@@ -111,13 +69,7 @@ const deleteValidation = [
       }
       return true;
     }),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).send(errors);
-    }
-    next();
-  },
+  sendValidationErrors(),
 ];
 
 module.exports = { postValidation, getValidation, putValidation, deleteValidation};

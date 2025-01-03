@@ -55,10 +55,6 @@ router.post("/:folderId?", postValidation, async (req, res) => {
 });
 
 router.put("/:folderId", putValidation, async (req, res) => {
-  if (Number(req.params.folderId) !== req.body.folderId) {
-    res.sendStatus(400);
-  }
-
   await prisma.folder.update({
     where: { id: req.body.folderId },
     data: { name: req.body.newName },
