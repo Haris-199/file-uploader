@@ -1,3 +1,4 @@
+const { signupErrorsHandler } = require("../../controllers/errors/client");
 const prisma = require("../../db/client");
 const { body } = require("express-validator");
 
@@ -25,6 +26,7 @@ const postValidation = [
       }
       return true;
     }),
+    signupErrorsHandler(),
 ];
 
 module.exports = { postValidation };

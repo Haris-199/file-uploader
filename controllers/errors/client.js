@@ -74,4 +74,32 @@ const sendErrorsHandler = (code, errors) => {
   };
 };
 
-module.exports = { renderError, sendValidationErrors, sendErrorsHandler };
+const signupErrorsHandler = () => {
+  return (req, res, next) => {
+    const errors = validationResult(req).array();
+  
+    if (errors.length > 0) {
+      const errorContext = {
+        view: "signup-form",
+        title: "Sign Up",
+        username: req.body.username,
+        usernameErrors: [],
+        passwordErrors: [],
+      };
+
+      errors.forEach((error) => {
+        if (error.path === "username") {
+          errorContext.usernameErrors.push(error.msg);
+        } else if (error.path === "password") {
+          errorContext.passwordErrors.push(error.msg);
+        } else if (error.path === "confirm_password") {
+          errorContext.confirmPasswordError = error.msg;
+        }
+      });
+      return res.render(".", errorContext);
+    }
+    next();
+  };
+};
+
+module.exports = { renderError, sendValidationErrors, sendErrorsHandler, signupErrorsHandler };
