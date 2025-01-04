@@ -1,3 +1,28 @@
-const renderErrorHandler = null;
+const { Prisma } = require("@prisma/client");
 
-// module.exports = { renderErrorHandler };
+const serverErrorHandler = (err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  console.error(err);
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    return res.status(500).render(".", {
+      view: "error",
+      title: "500 Error",
+      code: 500,
+      detail: "Internal Server Error",
+      message: "Something went wrong with the database.",
+      messages: ["Please try again later."],
+    });
+  }
+  res.status(500).render(".", {
+    view: "error",
+    title: "500 Error",
+    code: 500,
+    detail: "Internal Server Error",
+    message: "Something went wrong.",
+  });
+};
+
+module.exports = { serverErrorHandler };
