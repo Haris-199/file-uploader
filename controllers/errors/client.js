@@ -6,6 +6,10 @@ const getErrorContext = (msg) => {
       code: 404,
       detail: "Not Found",
     },
+    "File not found.": {
+      code: 404,
+      detail: "Not Found",
+    },
     "You don’t have permission to access this resource.": {
       code: 403,
       detail: "Forbidden",
@@ -96,7 +100,7 @@ const signupErrorsHandler = () => {
           errorContext.confirmPasswordError = error.msg;
         }
       });
-      return res.render(".", errorContext);
+      return res.status(400).render(".", errorContext);
     }
     next();
   };

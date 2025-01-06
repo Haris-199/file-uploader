@@ -5,7 +5,6 @@ const serverErrorHandler = (err, req, res, next) => {
     return next(err);
   }
 
-  console.error(err);
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     return res.status(500).render(".", {
       view: "error",

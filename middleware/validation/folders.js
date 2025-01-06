@@ -5,7 +5,7 @@ const { body, param } = require("express-validator");
 const getValidation = [
   param("folderId")
     .optional()
-    .isInt({ min: 1 }).withMessage("Folder not found.")
+    .isInt({ min: 1 }).withMessage("Invalid folder ID.")
     .custom(async (value, { req }) => {
       const folder = await prisma.folder.findUnique({
         where: { id: Number(value) },
@@ -25,7 +25,7 @@ const getValidation = [
 const postValidation = [
   param("folderId")
     .optional()
-    .isInt({ min: 1 }).withMessage("Folder not found.")
+    .isInt({ min: 1 }).withMessage("Invalid folder ID.")
     .custom(async (value, { req }) => {
       const folder = await prisma.folder.findUnique({
         where: { id: Number(value) },
@@ -47,7 +47,7 @@ const postValidation = [
     }),
   body("parentFolderId")
     .optional()
-    .isInt({ min: 1 }).withMessage("Folder not found.")
+    .isInt({ min: 1 }).withMessage("Invalid folder ID.")
     .custom(async (value, { req }) => {
       if (value !== req.params.folderId) {
         throw new Error("Param's folderId does not match body's parentFolderId.");
@@ -72,7 +72,7 @@ const putValidation = [
       if (!folder) {
         throw new Error("Folder not found.");
       }
-      if (folder.userId !== 12) {
+      if (folder.userId !== req.user?.id) {
         throw new Error("You don’t have permission to access this resource.");
       }
       if (value !== Number(req.params.folderId)) {

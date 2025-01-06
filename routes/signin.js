@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
           errContext.usernameError = info.message;
           break;
       }
-      return res.render(".", errContext);
+      return res.status(400).render(".", errContext);
     }
   })(req, res);
 });

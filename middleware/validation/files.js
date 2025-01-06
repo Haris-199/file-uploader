@@ -43,7 +43,7 @@ const putValidation = [
       if (!file) {
         throw new Error("File not found.");
       }
-      if (file.userId !== 12) {
+      if (file.userId !== req.user?.id) {
         throw new Error("You don’t have permission to access this resource.");
       }
       return true;

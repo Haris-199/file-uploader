@@ -1,5 +1,3 @@
-// grep -nr --exclude-dir=node_modules "console.error"
-
 require("dotenv").config();
 const prisma = require("./db/client");
 const { createClient } = require("@supabase/supabase-js");
@@ -13,6 +11,14 @@ const { removeFile } = require("./utils");
   const file = await prisma.file.findUnique({
     where: { id: value },
   });
-  console.log(file);
+  // console.log(file);
+
+  // console.log(
+  //   (await prisma.folder.findMany({ orderBy: { createdAt: "desc" } }))
+  // );
+  console.log(
+    await prisma.file.findMany()
+  );
+  
   
 })();
