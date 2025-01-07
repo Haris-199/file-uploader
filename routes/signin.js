@@ -1,6 +1,7 @@
 const passport = require("passport");
 const express = require("express");
 const { redirectIfAuthenticated } = require("../middleware");
+const prisma = require("../db/client");
 const router = express.Router();
 
 router.use(redirectIfAuthenticated);
@@ -23,7 +24,11 @@ router.post("/", (req, res) => {
         return res.redirect("/folders");
       });
     } else {
-      const errContext = { view: "signin-form", title: "Sign In", username: req.body.username };
+      const errContext = {
+        view: "signin-form",
+        title: "Sign In",
+        username: req.body.username,
+      };
       switch (info.message) {
         case "Incorrect password.":
           errContext.passwordError = info.message;
@@ -35,6 +40,16 @@ router.post("/", (req, res) => {
       return res.status(400).render(".", errContext);
     }
   })(req, res);
+});
+
+router.post("/guest", async (req, res) => {
+  const user = await prisma.user.findUnique({ where: { username: "guest" } });
+  req.login(user, (err) => {
+    if (err) {
+      return next(err);
+    }
+    return res.redirect("/folders");
+  });
 });
 
 module.exports = router;

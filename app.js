@@ -6,6 +6,7 @@ const passport = require("passport");
 const session = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
+const userConfig = require("./config/user-setup");
 require("./config/passport-setup");
 require("dotenv").config();
 
@@ -36,10 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use((req, res, next) => {
-  if (req.user) res.locals.user = req.user;
-  next();
-});
+app.use(userConfig);
 app.use("/", router);
 app.use(serverErrorHandler);
 
