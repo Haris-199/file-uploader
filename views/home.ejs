@@ -54,7 +54,12 @@
     <% } else { %>
       <a href="/signup" class="btn btn-primary btn-lg me-2"><i class="bi bi-person-plus"></i> Sign Up Now</a>
       <a href="/signin" class="btn btn-outline-secondary btn-lg"><i class="bi bi-box-arrow-in-right"></i> Sign In</a>
+      <div class="mt-4">
+        <p class="fs-5">Or try NeoDrive without signing up:</p>
+        <form action="/signin/guest" method="POST">
+          <button class="btn btn-primary btn-lg">Try Now</button>
+        </form>
+      </div>
     <% } %>
   </div>
-
 </div>

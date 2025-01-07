@@ -8,6 +8,15 @@
     </div>
 
     <div class="card-body pb-0">
+      <div class="text-center mb-3">
+        <h5 class="fw-bold mb-2">Try NeoDrive Now!</h5>
+        <p class="text-muted">Sign in as a guest to see what you can do.</p>
+        <form action="/signin/guest" method="POST">
+          <button type="submit" class="btn btn-primary fw-semibold">Try Now</button>
+        </form>
+      </div>
+      <hr class="my-3" />
+
       <form action="/signup" method="POST" class="needs-validation" novalidate>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
