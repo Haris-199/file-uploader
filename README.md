@@ -1,6 +1,6 @@
 # 📁 File Uploader Project "NeoDrive"
 
-This is a project from "The Odin Project" web development course. It is a comprehensive cloud-based storage application that allows users to upload, manage, and retrieve files efficiently, similar to Google Drive.
+This is a project from "The Odin Project" web development course. It's a comprehensive cloud-based storage application that allows users to upload, manage, and retrieve files efficiently, similar to Google Drive. The app uses a PostgreSQL database to store user information, file metadata, and other essential data; the files themselves are uploaded to Supabase.
 
 ## ✨ Features
 
@@ -11,19 +11,21 @@ This is a project from "The Odin Project" web development course. It is a compre
 
 ## 🌐 Deployment
 
-Try out the web app with the following link: [NeoDrive](https://example.com)
+Try out the web app with the following link: [NeoDrive](https://file-uploader-mzec.onrender.com/)
 
 ## 🛠️ Libraries and Tools Used
 
+- **Express**: A web framework for Node.js, used to build the server-side logic.
+- **PostgreSQL**: A powerful, open-source object-relational database system used to store user information, file metadata, and other essential data.
 - **Prisma**: An ORM (Object-Relational Mapping) tool used for database management and migrations.
-- **Jest**: A testing framework used to ensure the application has good test coverage and functions as expected.
-- **Supertest**: A library used for testing HTTP endpoints.
-- **Express**: A web application framework for Node.js, used to build the server-side logic.
-- **Multer**: A middleware for handling `multipart/form-data`, which is used for uploading files.
-- **bcrypt**: A library to help hash passwords.
 - **Supabase**: A backend-as-a-service platform used for database management and authentication.
 - **Passport**: A middleware for handling user authentication.
 - **Bootstrap**: A CSS framework used for styling the application.
+- **EJS**: A templating engine used for rendering HTML pages.
+- **Jest**: A testing framework used to ensure the application has good test coverage and functions as expected.
+- **Supertest**: A library used for testing HTTP endpoints.
+- **Multer**: A middleware for handling `multipart/form-data`, which is used for uploading files.
+- **bcryptjs**: A library to help hash passwords.
 
 ## 🧪 Testing
 
@@ -33,17 +35,17 @@ The project includes a comprehensive suite of tests written using Jest and Super
 - 🔗 Integration tests for ensuring different parts of the application work together correctly
 - 🌐 End-to-end tests to simulate real user interactions and verify the overall functionality
 
-The tests ensure that the application maintains high reliability and performance standards.
-
 ## 📸 Screenshots
 
 Here are some screenshots of the application:
 
+*Home Page*
+
 ![Home Page](./public/home.png)
-*Login Page*
+
+*Folders Page*
 
 ![Folders Page](./public/folders.png)
-*File Upload*
 
 ## 🚀 How to run
 
@@ -51,7 +53,7 @@ To get started with the project, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/file-uploader.git
+    git clone https://github.com/haris-199/file-uploader.git
     ```
 2. Install the dependencies:
     ```bash
