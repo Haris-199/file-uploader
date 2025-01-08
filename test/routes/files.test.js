@@ -64,12 +64,25 @@ describe("Files Routes", () => {
     it("should handle missing file", (done) => {
       request(app)
         .post("/files")
+        .expect((response) => {
+          expect(response.text).toContain("No file chosen.");
+        })
+        .expect(400, done);
+    });
+
+    it("should handle a large file", (done) => {
+      request(app)
+        .post("/files")
+        .attach("uploaded_file", __dirname + "/testBigFile.txt")
+        .expect((response) => {
+          expect(response.text).toContain("File is too large.");
+        })
         .expect(400, done);
     });
   });
 
   describe("PUT /files/:fileId", () => {
-    it("should update a file name", async () => {      
+    it("should update a file name", async () => {
       const response = await request(app)
         .put(`/files/${newFile.id}`)
         .send({ newName: "New Name", fileId: newFile.id });
