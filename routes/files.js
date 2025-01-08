@@ -18,45 +18,30 @@ const supabase = createClient(
 
 const router = Router();
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "./public/uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, uuidv4());
-    },
-  }),
+  storage: multer.memoryStorage(),
 });
 
 router.use(redirectIfNotAuthenticated);
 
 router.post("/", upload.single("uploaded_file"), postValidation, async (req, res) => {
+  const fileId = uuidv4();
   try {
-    const filePath = path.relative(
-      process.cwd(),
-      "./public/uploads/" + req.file.filename
-    );
-
-    const buffer = await fs.readFile(filePath);
-
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from("Files")
-      .upload(filePath, buffer, { contentType: req.file.mimetype });
+      .upload(`./public/uploads/${fileId}`, req.file.buffer, { contentType: req.file.mimetype });
       
     if (error) {
       console.error("Error uploading file:", error);
       return res.status(500).send(error);
     }
-  } catch (e) {
-    console.error(e);
-    throw e;
-  } finally {
-    removeFile(req.file.filename);
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
 
-  let newFile = await prisma.file.create({
+  const newFile = await prisma.file.create({
     data: {
-      id: req.file.filename,
+      id: fileId,
       name: req.file.originalname,
       mimetype: req.file.mimetype,
       size: req.file.size,
@@ -65,7 +50,7 @@ router.post("/", upload.single("uploaded_file"), postValidation, async (req, res
   });
 
   if (req.body.parentFolderId !== undefined) {
-    newFile = await prisma.file.update({
+    await prisma.file.update({
       where: { id: newFile.id },
       data: {
         parentFolder: { connect: { id: Number(req.body.parentFolderId) } },
