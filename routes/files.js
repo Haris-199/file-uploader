@@ -1,14 +1,11 @@
-const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const { filesize } = require("filesize");
-const { removeFile } = require("../utils/");
 const prisma = require("../db/client");
-const multer = require("multer");
 const { Router } = require("express");
 const { createClient } = require("@supabase/supabase-js");
-const fs = require("fs/promises");
 const { postValidation, getValidation, putValidation, deleteValidation } = require("../middleware/validation/files");
-const { redirectIfNotAuthenticated } = require("../middleware");
+const { redirectIfNotAuthenticated, uploadFile } = require("../middleware");
+const stream = require("stream");
 require("dotenv").config();
 
 const supabase = createClient(
@@ -17,13 +14,10 @@ const supabase = createClient(
 );
 
 const router = Router();
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
 
 router.use(redirectIfNotAuthenticated);
 
-router.post("/", upload.single("uploaded_file"), postValidation, async (req, res) => {
+router.post("/", uploadFile, postValidation, async (req, res) => {
   const fileId = uuidv4();
   try {
     const { error } = await supabase.storage
@@ -36,7 +30,7 @@ router.post("/", upload.single("uploaded_file"), postValidation, async (req, res
     }
   } catch (err) {
     console.error(err);
-    next(err);
+    return next(err);
   }
 
   const newFile = await prisma.file.create({
@@ -57,7 +51,7 @@ router.post("/", upload.single("uploaded_file"), postValidation, async (req, res
       },
     });
   }
-
+  
   if (req.body.parentFolderId) {
     return res.redirect(`/folders/${req.body.parentFolderId}`);
   }
@@ -71,23 +65,22 @@ router.get("/:fileId/download", getValidation, async (req, res) => {
 
   try {
     const { data, error } = await supabase.storage.from("Files").download(`public/uploads/${file.id}`);
-    
     if (error) {
       console.error("Error downloading file:", error);
       return res.status(500).send(error);
     }
 
-    const filePath = path.relative(process.cwd(), "./public/uploads/" + file.name);
-    const buffer = Buffer.from( await data.arrayBuffer() );
-    await fs.writeFile(filePath, buffer);
-    res.download(filePath, file.name, function (err) {
-      if (err) {
-        console.error(err);
-      } else {
-        removeFile(file.name);
-      }
-    });
+    const buffer = Buffer.from(await data.arrayBuffer());  
+    const readStream = new stream.PassThrough();
+    readStream.end(buffer);
+
+    res.set("Content-disposition", "attachment; filename=" + file.name);
+    res.set("Content-Type", file.mimetype);
+    readStream.pipe(res);
   } catch (e) {
+    if (res.headersSent) {
+      return next(err);
+    }
     res.status(500).send(e);
     console.error(e);
   } 

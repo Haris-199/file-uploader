@@ -30,6 +30,10 @@ const getErrorContext = (msg) => {
       code: 400,
       detail: "Bad Request",
     },
+    "File is too large.": {
+      code: 400,
+      detail: "Bad Request",
+    },
     "Parameter ID does not match body ID.": {
       code: 400,
       detail: "Bad Request",

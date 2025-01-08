@@ -7,6 +7,10 @@ const postValidation = [
     if (!req.file) {
       throw new Error("No file chosen.");
     }
+    // Larger than 1MB
+    if (req.file.size > 1048576) {
+      throw new Error("File is too large.");
+    }
     return true;
   }),
   renderError(),
