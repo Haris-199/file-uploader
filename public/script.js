@@ -107,3 +107,19 @@ const onFileDelete = async (id, name) => {
     alert(`An error occurred while deleting the file "${name}".`);
   }
 };
+
+const uploadFileform = document.querySelector('form[enctype="multipart/form-data"]');
+if (uploadFileform) {
+  uploadFileform.addEventListener("submit", (event) => {
+    const fileInput = document.getElementById("uploaded_file");
+    const file = fileInput.files[0];
+    if (file && file.size > 1048576) {
+      event.preventDefault();
+      fileInput.classList.add("is-invalid");
+      fileInput.nextElementSibling.textContent = "File size must be less than 1MB.";
+      setTimeout(() => {
+        uploadFileform.classList.remove("was-validated");
+      }, 300);
+    }
+  });
+}
