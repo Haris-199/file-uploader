@@ -16,9 +16,9 @@
       <% } %>
     </div>
 
-    <div class="p-2 bg-light">
-      <%- include("partials/upload-file-form", locals) %>
-      <%- include("partials/new-folder-form", locals) %>
+    <div class="p-2 bg-light d-flex flex-wrap gap-2 justify-content-sm-start justify-content-evenly">
+      <div class=""><%- include("partials/upload-file-form", locals) %></div>
+      <div class=""><%- include("partials/new-folder-form", locals) %></div>
     </div>
     
     <ul class="list-group list-group-flush">
