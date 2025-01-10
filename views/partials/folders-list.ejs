@@ -1,19 +1,20 @@
 <% if (folders.length > 0) { %>
-  <li class="list-group-item bg-light d-flex justify-content-between align-items-center">
+  <li class="list-group-item bg-light d-flex align-items-center">
     <strong class="col-sm-5 col flex-grow-1"><i class="bi bi-folder me-2"></i> Folders</strong>
     <div class="col-sm-1 col"></div>
     <div class="row col-sm-3 col justify-content-end">
-      <div class="col-1 d-sm-block d-none"></div>
+      <div class="col-1"></div>
       <small class="col text-muted text-center">Last Updated</small>
     </div>
   </li>
   <% folders.forEach(folder => { %>
-    <li class="list-group-item d-flex align-items-center">
-      <strong class="col-sm-5 col flex-grow-1 d-flex align-items-center">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="col-sm-5 w-75 d-flex align-items-center">
         <%- include("./folder-options", { folder }) %>
-        <a href="/folders/<%= folder.id %>" class="ms-3"><%= folder.name %></a>
-      </strong>
-      <div class="col-sm-1 col"></div>
+        <strong class="text-truncate">
+          <a href="/folders/<%= folder.id %>" class="ms-3"><%= folder.name %></a>
+        </strong>
+      </div>
       <div class="row col-sm-3 col justify-content-end">
         <div class="col-1 d-sm-block d-none"></div>
         <small class="col text-muted text-center"><%= folder.updatedAt.toLocaleString() %></small>

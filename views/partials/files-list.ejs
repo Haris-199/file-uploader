@@ -1,6 +1,6 @@
 <% if (files.length > 0) { %>
   <li class="list-group-item bg-light d-flex justify-content-between align-items-center">
-    <strong class="col-sm-5 col flex-grow-1"><i class="bi bi-file-earmark-text me-2"></i> Files</strong>
+    <strong class="col-sm-5 col-1 flex-grow-1"><i class="bi bi-file-earmark-text me-2"></i> Files</strong>
     <div class="col-sm-1 col text-muted text-center mb-0"><small>Size</small></div>
     <div class="row col-sm-3 col justify-content-end">
       <div class="col-1 d-sm-block d-none"></div>
@@ -9,10 +9,12 @@
   </li>
   <% files.forEach((file) => { %>
     <li class="list-group-item d-flex align-items-center">
-      <strong class="col-sm-5 col flex-grow-1 m-0 d-flex align-items-center">
+      <div class="col-sm-5 col-1 flex-grow-1 m-0 d-flex align-items-center">
         <%- include("./file-options", { file }) %>
-        <a href="/files/<%= file.id %>" class="ms-3"><%= file.name %></a>
-      </strong>
+        <strong class="text-truncate">
+          <a href="/files/<%= file.id %>" class="ms-3" ><%= file.name %></a>
+        </strong>
+      </div>
       <div class="col-sm-1 col text-muted text-center">
         <%= filesize(file.size, {round: 2}) %>
       </div>
