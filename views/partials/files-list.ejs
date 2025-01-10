@@ -9,7 +9,7 @@
   </li>
   <% files.forEach((file) => { %>
     <li class="list-group-item d-flex align-items-center">
-      <strong class="col-sm-5 col flex-grow-1 text-truncate m-0 d-flex">
+      <strong class="col-sm-5 col flex-grow-1 m-0 d-flex align-items-center">
         <%- include("./file-options", { file }) %>
         <a href="/files/<%= file.id %>" class="ms-3"><%= file.name %></a>
       </strong>

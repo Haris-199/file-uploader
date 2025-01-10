@@ -9,7 +9,7 @@
   </li>
   <% folders.forEach(folder => { %>
     <li class="list-group-item d-flex align-items-center">
-      <strong class="col-sm-5 col flex-grow-1 d-flex">
+      <strong class="col-sm-5 col flex-grow-1 d-flex align-items-center">
         <%- include("./folder-options", { folder }) %>
         <a href="/folders/<%= folder.id %>" class="ms-3"><%= folder.name %></a>
       </strong>
