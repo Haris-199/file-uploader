@@ -17,7 +17,7 @@ const router = Router();
 
 router.use(redirectIfNotAuthenticated);
 
-router.post("/", uploadFile, postValidation, async (req, res) => {
+router.post("/", uploadFile, postValidation, async (req, res, next) => {
   const fileId = uuidv4();
   try {
     const { error } = await supabase.storage
